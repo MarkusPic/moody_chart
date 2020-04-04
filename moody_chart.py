@@ -19,6 +19,7 @@ def turbulent_func(reynolds, relative_roughness):
 def moody_chart():
     plt.rc('text', usetex=True)
     plt.rc('font', family='sans-serif')
+    plt.rc('font', **{'sans-serif': ['Helvetica']})
 
     fig, ax = plt.subplots()
 
@@ -58,26 +59,26 @@ def moody_chart():
     ax.set_yticks([0.01, 0.02, 0.03, 0.05, 0.07, 0.1])
     ax.set_yticks([0.015, 0.04], minor=True)
 
-    ax.set_yticklabels([0.01, 0.02, 0.03, 0.05, 0.07, 0.10])
+    ax.set_yticklabels('${}$'.format(i) for i in [0.01, 0.02, 0.03, 0.05, 0.07, 0.10])
 
     ax.set_yticklabels([], minor=True)
 
     ax.set_ylabel(r'$\longrightarrow \lambda$', fontsize='x-large')
-    ax.set_xlabel(r'$\longrightarrow Re=\frac{v*d}{\nu}$', fontsize='x-large')
+    ax.set_xlabel(r'$\longrightarrow Re=\frac{v*d}{\nu}$'.replace('*', r' \cdot '), fontsize='x-large')
 
     ax.text(1.7e3, 0.02,
             'laminar \n' + r'$\lambda=\frac{64}{Re}$',
             bbox=dict(facecolor='white', alpha=0.9, linewidth=0), rotation=-70, verticalalignment='top')
 
-    ax.text(6e5, 0.075, 'hydraulisch rau \n' + r'$\frac{1}{\sqrt{\lambda}}=1.14-2*\log_{10}\left(\frac{k}{d}\right)$',
+    ax.text(6e5, 0.075, 'hydraulisch rau \n' + r'$\frac{1}{\sqrt{\lambda}}=1.14-2*\log_{10}\left(\frac{k}{d}\right)$'.replace('*', r' \cdot '),
             bbox=dict(facecolor='white', alpha=0.9, linewidth=0))
 
     ax.text(7e3, 0.028,
-            'hydraulisch glatt \n' + r'$\frac{1}{\sqrt{\lambda}}=2*\log_{10}\left(Re*\sqrt{\lambda}\right)-0.8$',
+            'hydraulisch glatt \n' + r'$\frac{1}{\sqrt{\lambda}}=2*\log_{10}\left(Re*\sqrt{\lambda}\right)-0.8$'.replace('*', r' \cdot '),
             bbox=dict(facecolor='white', alpha=0.9, linewidth=0), rotation=-30, verticalalignment='top')
 
     ax.text(7e3, 0.075,
-            'Übergangsbereich\n' + r'$\frac{1}{\sqrt{\lambda}}=-2*\log_{10}\left(\frac{2,51}{Re*\sqrt{\lambda}}+\frac{1}{3,71}*\frac{k}{d}\right)$',
+            'Übergangsbereich\n' + r'$\frac{1}{\sqrt{\lambda}}=-2*\log_{10}\left(\frac{2.51}{Re*\sqrt{\lambda}}+\frac{1}{3.71}*\frac{k}{d}\right)$'.replace('*', r' \cdot '),
             bbox=dict(facecolor='white', alpha=0.9, linewidth=0))
 
     fig.set_size_inches(7, 5)
