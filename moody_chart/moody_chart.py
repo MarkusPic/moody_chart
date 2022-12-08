@@ -21,7 +21,8 @@ def moody_chart():
     plt.rc('font', family='sans-serif')
     plt.rc('font', **{'sans-serif': ['Helvetica']})
 
-    fig, ax = plt.subplots()
+    fig = plt.figure(constrained_layout=True)  # type: plt.Figure
+    ax = fig.subplots()
 
     glatt_reynolds = np.logspace(log10(1500), log10(2.5e6), 100)
     glatt_lambda = np.vectorize(lambda x: turbulent_func(x, 0))(glatt_reynolds)
@@ -42,11 +43,11 @@ def moody_chart():
 
         ax.plot(rau_reynolds, rau_lambda, c='k')
 
-        ax.text(3e6, rau_lambda[-3] + 0.0005, r'$k/d={}$'.format(k_d),
+        ax.text(3e6, rau_lambda[-3] + 0.0005, f'$k/d={k_d}$',
                 verticalalignment='bottom', horizontalalignment='left')
 
-    ax.set_xscale("log", nonposx='clip')
-    ax.set_yscale("log", nonposy='clip')
+    ax.set_xscale("log", nonpositive='clip')
+    ax.set_yscale("log", nonpositive='clip')
 
     ax.grid(True)
     ax.grid(True, which='minor')
@@ -59,7 +60,7 @@ def moody_chart():
     ax.set_yticks([0.01, 0.02, 0.03, 0.05, 0.07, 0.1])
     ax.set_yticks([0.015, 0.04], minor=True)
 
-    ax.set_yticklabels('${}$'.format(i) for i in [0.01, 0.02, 0.03, 0.05, 0.07, 0.10])
+    ax.set_yticklabels(f'${i}$' for i in [0.01, 0.02, 0.03, 0.05, 0.07, 0.10])
 
     ax.set_yticklabels([], minor=True)
 
@@ -80,13 +81,4 @@ def moody_chart():
     ax.text(7e3, 0.075,
             'Übergangsbereich\n' + r'$\frac{1}{\sqrt{\lambda}}=-2*\log_{10}\left(\frac{2.51}{Re*\sqrt{\lambda}}+\frac{1}{3.71}*\frac{k}{d}\right)$'.replace('*', r' \cdot '),
             bbox=dict(facecolor='white', alpha=0.9, linewidth=0))
-
-    fig.set_size_inches(7, 5)
-    fig.tight_layout()
-    return fig
-
-
-if __name__ == '__main__':
-    fig = moody_chart()
-    fig.savefig('moody_chart.png')
-
+    return fig, ax
